@@ -60,6 +60,7 @@ export const columns: ColumnDef<Transaction>[] = [
       const status = row.getValue("status") as string;
       return <Status>{status}</Status>;
     },
+    size: 20,
   },
   {
     accessorKey: "title",
@@ -133,5 +134,6 @@ export const columns: ColumnDef<Transaction>[] = [
         </Dialog>
       );
     },
+    size: 20,
   },
 ];

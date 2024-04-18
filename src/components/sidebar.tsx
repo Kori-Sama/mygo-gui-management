@@ -1,9 +1,11 @@
-import { Package2, Home, ShoppingCart, Users2, Settings } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Package2, Home, ArrowLeftRight, Users2, Settings } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { ModeToggle } from "./mode-toggle";
+import { cn } from "@/lib/utils";
 
 const Sidebar = () => {
+  const { pathname } = useLocation();
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -18,7 +20,12 @@ const Sidebar = () => {
           <TooltipTrigger asChild>
             <Link
               to="/dashboard"
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+              className={cn(
+                "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
+                {
+                  "bg-accent text-accent-foreground": pathname === "/dashboard",
+                }
+              )}
             >
               <Home className="h-5 w-5" />
               <span className="sr-only">Dashboard</span>
@@ -30,9 +37,15 @@ const Sidebar = () => {
           <TooltipTrigger asChild>
             <Link
               to="/transaction"
-              className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+              className={cn(
+                "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
+                {
+                  "bg-accent text-accent-foreground":
+                    pathname === "/transaction",
+                }
+              )}
             >
-              <ShoppingCart className="h-5 w-5" />
+              <ArrowLeftRight className="h-5 w-5" />
               <span className="sr-only">Transaction</span>
             </Link>
           </TooltipTrigger>
@@ -42,7 +55,12 @@ const Sidebar = () => {
           <TooltipTrigger asChild>
             <Link
               to="/user"
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+              className={cn(
+                "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
+                {
+                  "bg-accent text-accent-foreground": pathname === "/user",
+                }
+              )}
             >
               <Users2 className="h-5 w-5" />
               <span className="sr-only">User</span>
@@ -80,7 +98,12 @@ const Sidebar = () => {
           <TooltipTrigger asChild>
             <Link
               to="/settings"
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+              className={cn(
+                "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
+                {
+                  "bg-accent text-accent-foreground": pathname === "/settings",
+                }
+              )}
             >
               <Settings className="h-5 w-5" />
               <span className="sr-only">Settings</span>

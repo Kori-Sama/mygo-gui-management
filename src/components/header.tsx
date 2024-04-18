@@ -2,9 +2,9 @@ import {
   PanelLeft,
   Package2,
   Home,
-  ShoppingCart,
   Users2,
   LineChart,
+  ArrowLeftRight,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 // import { ModeToggle } from "./mode-toggle";
@@ -63,7 +63,7 @@ const Header = () => {
               to="/transaction"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
-              <ShoppingCart className="h-5 w-5" />
+              <ArrowLeftRight className="h-5 w-5" />
               Transaction
             </Link>
             <Link
@@ -100,12 +100,12 @@ const Header = () => {
             const to = `/${pathnames.slice(0, index + 1).join("/")}`;
 
             return isLast ? (
-              <>
+              <Fragment key={to}>
                 <BreadcrumbSeparator />
-                <BreadcrumbItem key={to}>
+                <BreadcrumbItem>
                   <BreadcrumbPage>{value}</BreadcrumbPage>
                 </BreadcrumbItem>
-              </>
+              </Fragment>
             ) : (
               <Fragment key={to}>
                 <BreadcrumbSeparator />
@@ -135,11 +135,11 @@ const Header = () => {
             size="icon"
             className="overflow-hidden rounded-full"
           >
-            <image
-              // src="/placeholder-user.jpg"
+            <img
+              src="/src/assets/Alice.jpg"
               width={36}
               height={36}
-              // alt="Avatar"
+              alt="Avatar"
               className="overflow-hidden rounded-full"
             />
           </Button>

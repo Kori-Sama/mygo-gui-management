@@ -11,6 +11,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const TransactionPage = () => {
   // const [status, setStatus] = useState("all");
@@ -24,22 +33,37 @@ const TransactionPage = () => {
   }, []);
 
   return (
-    <Card x-chunk="dashboard-06-chunk-0" className="lg:mx-64 mt-4">
-      <CardHeader>
-        <CardTitle>Transaction</CardTitle>
-        <CardDescription>
-          Manage your Transaction and view their details.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <DataTable columns={columns} data={data} />
-      </CardContent>
-      <CardFooter>
-        <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>32</strong> products
-        </div>
-      </CardFooter>
-    </Card>
+    <Dialog>
+      <Card x-chunk="dashboard-06-chunk-0" className="lg:mx-64 mt-4">
+        <CardHeader>
+          <CardTitle>
+            <div className="flex justify-between">
+              <p>Transaction</p>
+              <DialogTrigger asChild>
+                <Button>Export</Button>
+              </DialogTrigger>
+            </div>
+          </CardTitle>
+          <CardDescription>
+            Manage your Transaction and view their details.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <DataTable columns={columns} data={data} />
+        </CardContent>
+        <CardFooter>
+          <div className="text-xs text-muted-foreground">
+            Showing <strong>1-10</strong> of <strong>32</strong> products
+          </div>
+        </CardFooter>
+      </Card>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Export to local file</DialogTitle>
+        </DialogHeader>
+        <DialogFooter></DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

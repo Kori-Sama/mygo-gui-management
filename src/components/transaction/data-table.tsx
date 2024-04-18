@@ -28,7 +28,6 @@ import {
   PaginationEllipsis,
   PaginationNext,
 } from "../ui/pagination";
-import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -92,7 +91,10 @@ export function DataTable<TData, TValue>({
                   className={row.index % 2 === 0 ? "bg-secondary" : ""}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="table-cell">
+                    <TableCell
+                      key={cell.id}
+                      className={cell.id === "0" ? "w-0" : ""}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
