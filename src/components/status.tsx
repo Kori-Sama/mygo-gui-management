@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Badge } from "./ui/badge";
 
 const Status = ({
   className,
@@ -8,9 +9,9 @@ const Status = ({
   children: string;
 }) => {
   return (
-    <span
+    <Badge
       className={cn(
-        "px-2 py-1 rounded-lg text-md font-semibold text-white",
+        "font-semibold text-white",
         children === "passed"
           ? "bg-green-500"
           : children === "reject"
@@ -22,7 +23,7 @@ const Status = ({
       )}
     >
       {children.charAt(0).toUpperCase() + children.slice(1)}
-    </span>
+    </Badge>
   );
 };
 

@@ -84,26 +84,28 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "date",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Date
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <div className="flex">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Date
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
       );
     },
   },
   {
-    accessorKey: "operation",
-    header: "Operation",
+    accessorKey: "action",
+    header: () => <span className="sr-only">Action</span>,
     cell: ({ row }) => {
       const { title, description, status, date } = row.original;
       return (
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="ghost">
-              <MoreHorizontal />
+              <MoreHorizontal className="w-4 h-4" />
             </Button>
           </DialogTrigger>
           <DialogContent>
