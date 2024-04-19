@@ -20,6 +20,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const TransactionPage = () => {
   // const [status, setStatus] = useState("all");
@@ -31,6 +42,9 @@ const TransactionPage = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const [fileKind, setFileKind] = useState<"csv" | "json" | "excel" | "">("");
+  const [onDownload, setOnDownload] = useState(false);
 
   return (
     <Dialog>
@@ -61,7 +75,35 @@ const TransactionPage = () => {
         <DialogHeader>
           <DialogTitle>Export to local file</DialogTitle>
         </DialogHeader>
-        <DialogFooter></DialogFooter>
+        <div>
+          <Select
+            onValueChange={(kind) => {
+              setFileKind(kind as "csv" | "json" | "excel" | "");
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="File kind" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="csv">CSV</SelectItem>
+              <SelectItem value="json">JSON</SelectItem>
+              <SelectItem value="excel">Excel</SelectItem>
+            </SelectContent>
+          </Select>
+          {fileKind === "" && onDownload ? (
+            <p className="text-red-500">Please select a file kind</p>
+          ) : null}
+        </div>
+        <DialogFooter>
+          <Button
+            onClick={() => {
+              setOnDownload(true);
+              console.log(fileKind);
+            }}
+          >
+            Download
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
