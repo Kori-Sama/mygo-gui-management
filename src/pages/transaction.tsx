@@ -29,14 +29,13 @@ import {
 } from "@/components/ui/select";
 
 const TransactionPage = () => {
-  // const [status, setStatus] = useState("all");
   const [data, setData] = useState<Transaction[]>([]);
   const fetchData = useTransactionStore((state) => state.fetchTransactions);
+
   useEffect(() => {
     fetchData().then((data) => {
       setData(data);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [fileKind, setFileKind] = useState<"csv" | "json" | "excel" | "">("");

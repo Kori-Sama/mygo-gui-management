@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({
   const pageSize = table.getState().pagination.pageSize;
   useEffect(() => {
     paginationCallback(pageIndex, pageSize);
-  }, [pageIndex, pageSize, paginationCallback, table]);
+  }, [pageIndex, pageSize]);
 
   return (
     <div>
@@ -133,7 +133,6 @@ export function DataTable<TData, TValue>({
                 onClick={() => {
                   if (table.getCanPreviousPage()) {
                     table.previousPage();
-                    // onPageChange();
                   }
                 }}
                 isActive={table.getCanPreviousPage()}
@@ -143,11 +142,8 @@ export function DataTable<TData, TValue>({
               <PaginationItem key={index}>
                 <PaginationLink
                   href="#"
-                  onClick={() => {
-                    table.setPageIndex(index);
-                    // onPageChange();
-                  }}
-                  isActive={table.getState().pagination.pageIndex === index}
+                  onClick={() => table.setPageIndex(index)}
+                  isActive={pageIndex === index}
                 >
                   {index + 1}
                 </PaginationLink>
@@ -162,7 +158,6 @@ export function DataTable<TData, TValue>({
                 onClick={() => {
                   if (table.getCanNextPage()) {
                     table.nextPage();
-                    // onPageChange();
                   }
                 }}
                 isActive={table.getCanNextPage()}
