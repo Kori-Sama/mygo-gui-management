@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -32,11 +32,13 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  paginationCallback: (pageIndex: number, pageSize: number) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  paginationCallback,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -59,6 +61,12 @@ export function DataTable<TData, TValue>({
       },
     },
   });
+
+  const pageIndex = table.getState().pagination.pageIndex;
+  const pageSize = table.getState().pagination.pageSize;
+  useEffect(() => {
+    paginationCallback(pageIndex, pageSize);
+  }, [pageIndex, pageSize, paginationCallback, table]);
 
   return (
     <div>
@@ -125,6 +133,7 @@ export function DataTable<TData, TValue>({
                 onClick={() => {
                   if (table.getCanPreviousPage()) {
                     table.previousPage();
+                    // onPageChange();
                   }
                 }}
                 isActive={table.getCanPreviousPage()}
@@ -134,7 +143,10 @@ export function DataTable<TData, TValue>({
               <PaginationItem key={index}>
                 <PaginationLink
                   href="#"
-                  onClick={() => table.setPageIndex(index)}
+                  onClick={() => {
+                    table.setPageIndex(index);
+                    // onPageChange();
+                  }}
                   isActive={table.getState().pagination.pageIndex === index}
                 >
                   {index + 1}
@@ -150,6 +162,7 @@ export function DataTable<TData, TValue>({
                 onClick={() => {
                   if (table.getCanNextPage()) {
                     table.nextPage();
+                    // onPageChange();
                   }
                 }}
                 isActive={table.getCanNextPage()}

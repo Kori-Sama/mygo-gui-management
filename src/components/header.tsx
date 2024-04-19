@@ -150,7 +150,7 @@ const Header = () => {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem className="bg-destructive">Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

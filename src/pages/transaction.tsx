@@ -21,10 +21,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -46,6 +42,14 @@ const TransactionPage = () => {
   const [fileKind, setFileKind] = useState<"csv" | "json" | "excel" | "">("");
   const [onDownload, setOnDownload] = useState(false);
 
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(8);
+
+  const onTableChange = (pageIndex: number, pageSize: number) => {
+    setPageIndex(pageIndex);
+    setPageSize(pageSize);
+  };
+
   return (
     <Dialog>
       <Card x-chunk="dashboard-06-chunk-0" className="lg:mx-64 mt-4">
@@ -63,11 +67,22 @@ const TransactionPage = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <DataTable columns={columns} data={data} />
+          <DataTable
+            columns={columns}
+            data={data}
+            paginationCallback={onTableChange}
+          />
         </CardContent>
         <CardFooter>
           <div className="text-xs text-muted-foreground">
-            Showing <strong>1-10</strong> of <strong>32</strong> products
+            Showing{" "}
+            <strong>
+              {pageIndex * pageSize + 1}-
+              {(pageIndex + 1) * pageSize > data.length
+                ? data.length
+                : (pageIndex + 1) * pageSize}
+            </strong>{" "}
+            of <strong>{data.length}</strong> transactions
           </div>
         </CardFooter>
       </Card>
@@ -91,7 +106,7 @@ const TransactionPage = () => {
             </SelectContent>
           </Select>
           {fileKind === "" && onDownload ? (
-            <p className="text-red-500">Please select a file kind</p>
+            <p className="text-destructive">Please select a file kind</p>
           ) : null}
         </div>
         <DialogFooter>
