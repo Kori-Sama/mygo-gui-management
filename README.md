@@ -1,6 +1,6 @@
 # This is a management system for MyGO project
 
-## React + TypeScript + Vite
+## React + TypeScript + Vite + Tailwind + Shadcn
 
 ### Related projects' links
 

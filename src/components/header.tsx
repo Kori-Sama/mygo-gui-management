@@ -28,6 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Fragment } from "react/jsx-runtime";
+import avatar from "@/assets/Alice.jpg";
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -136,7 +137,7 @@ const Header = () => {
             className="overflow-hidden rounded-full"
           >
             <img
-              src="/src/assets/Alice.jpg"
+              src={avatar}
               width={36}
               height={36}
               alt="Avatar"
