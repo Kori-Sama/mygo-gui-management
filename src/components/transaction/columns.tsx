@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -106,11 +107,13 @@ export const columns: ColumnDef<Transaction>[] = [
       /* eslint-disable */
       const [tx, setTx] = useState(row.original);
       const handleTx = useTransactionStore((s) => s.handleTransaction);
+      const setStoreTx = useTransactionStore((s) => s.setTransaction);
       /* eslint-enable */
 
       const handle = (action: "reject" | "pass") => {
         handleTx(tx.id, action).then((t) => {
           setTx(t);
+          setStoreTx(t);
         });
       };
 
@@ -135,17 +138,22 @@ export const columns: ColumnDef<Transaction>[] = [
               <DialogFooter>
                 <div className="flex items-center w-full justify-between mt-2">
                   <Status>{tx.status}</Status>
-                  <div className="flex gap-4 items-center">
-                    <Button
-                      variant="destructive"
-                      onClick={() => handle("reject")}
-                    >
-                      Reject
-                    </Button>
-                    <Button variant="secondary" onClick={() => handle("pass")}>
-                      Pass
-                    </Button>
-                  </div>
+                  <DialogClose>
+                    <div className="flex gap-4 items-center">
+                      <Button
+                        variant="destructive"
+                        onClick={() => handle("reject")}
+                      >
+                        Reject
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        onClick={() => handle("pass")}
+                      >
+                        Pass
+                      </Button>
+                    </div>
+                  </DialogClose>
                 </div>
               </DialogFooter>
             </DialogHeader>

@@ -2,7 +2,6 @@ import { columns } from "@/components/transaction/columns";
 import { DataTable } from "@/components/transaction/data-table";
 import { useEffect, useState } from "react";
 import { useTransactionStore } from "@/store";
-import { Transaction } from "@/lib/types";
 import {
   Card,
   CardContent,
@@ -29,14 +28,11 @@ import {
 } from "@/components/ui/select";
 
 const TransactionPage = () => {
-  const [data, setData] = useState<Transaction[]>([]);
   const fetchData = useTransactionStore((state) => state.fetchTransactions);
-
   useEffect(() => {
-    fetchData().then((data) => {
-      setData(data);
-    });
+    fetchData();
   }, []);
+  const data = useTransactionStore((state) => state.transactions);
 
   const [fileKind, setFileKind] = useState<"csv" | "json" | "excel" | "">("");
   const [onDownload, setOnDownload] = useState(false);

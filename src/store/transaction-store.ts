@@ -11,6 +11,7 @@ interface TransactionState {
     id: number,
     action: "get" | "pass" | "reject" | "delete"
   ) => Promise<Transaction>;
+  setTransaction: (tx: Transaction) => void;
 }
 const useTransactionStore = create<TransactionState>()((set) => ({
   transactions: [],
@@ -47,6 +48,18 @@ const useTransactionStore = create<TransactionState>()((set) => ({
       return { transactions: state.transactions };
     });
     return tx;
+  },
+  setTransaction: (tx: Transaction) => {
+    set((state) => {
+      const newTx = state.transactions.map((t) => {
+        if (t.id === tx.id) {
+          return tx;
+        } else {
+          return t;
+        }
+      });
+      return { transactions: newTx };
+    });
   },
 }));
 
