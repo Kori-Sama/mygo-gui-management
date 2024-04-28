@@ -1,5 +1,6 @@
 import Dashboard from "@/pages/dashborad";
 import Layout from "@/pages/layout";
+import Login from "@/pages/login";
 import SettingsPage from "@/pages/settings";
 import TransactionPage from "@/pages/transaction";
 import UserPage from "@/pages/user";
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         element: <SettingsPage />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

@@ -7,6 +7,8 @@ RUN yarn install
 
 RUN yarn build
 
+
+
 FROM nginx:alpine-slim
 
 RUN  rm -rf /etc/nginx/nginx.conf

@@ -21,6 +21,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useTransactionStore } from "@/store";
+import { useState } from "react";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -101,7 +103,17 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "action",
     header: () => <span className="sr-only">Action</span>,
     cell: ({ row }) => {
-      const { title, description, status, date } = row.original;
+      /* eslint-disable */
+      const [tx, setTx] = useState(row.original);
+      const handleTx = useTransactionStore((s) => s.handleTransaction);
+      /* eslint-enable */
+
+      const handle = (action: "reject" | "pass") => {
+        handleTx(tx.id, action).then((t) => {
+          setTx(t);
+        });
+      };
+
       return (
         <Dialog>
           <DialogTrigger asChild>
@@ -113,19 +125,26 @@ export const columns: ColumnDef<Transaction>[] = [
             <DialogHeader>
               <DialogTitle>
                 <div className="flex flex-col justify-between m-2 gap-2">
-                  <div>{title}</div>
-                  <p className="text-sm text-accent">{date}</p>
+                  <div>{tx.title}</div>
+                  <p className="text-sm text-accent">{tx.date}</p>
                 </div>
               </DialogTitle>
               <DialogDescription>
-                <Textarea readOnly value={description} />
+                <Textarea readOnly value={tx.description} />
               </DialogDescription>
               <DialogFooter>
                 <div className="flex items-center w-full justify-between mt-2">
-                  <Status>{status}</Status>
+                  <Status>{tx.status}</Status>
                   <div className="flex gap-4 items-center">
-                    <Button variant="destructive">Reject</Button>
-                    <Button variant="secondary">Pass</Button>
+                    <Button
+                      variant="destructive"
+                      onClick={() => handle("reject")}
+                    >
+                      Reject
+                    </Button>
+                    <Button variant="secondary" onClick={() => handle("pass")}>
+                      Pass
+                    </Button>
                   </div>
                 </div>
               </DialogFooter>

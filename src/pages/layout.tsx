@@ -6,7 +6,12 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 const Layout = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  useEffect(() => {}, []);
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    }
     if (pathname == "/") {
       navigate("/dashboard");
     }
