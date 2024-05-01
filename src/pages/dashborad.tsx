@@ -15,10 +15,10 @@ const Dashboard = () => {
   const lang = useLangStore((s) => s.map);
 
   return (
-    <main className="p-4">
+    <main className="py-4 px-24">
       <Tabs defaultValue="overview">
         <TabsList>
-          <TabsTrigger value="overview">{lang.Dashboard}</TabsTrigger>
+          <TabsTrigger value="overview">{lang.Overview}</TabsTrigger>
           <TabsTrigger value="history">{lang.History}</TabsTrigger>
         </TabsList>
         <Overview tx={tx} />

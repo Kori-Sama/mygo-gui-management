@@ -35,6 +35,10 @@ const dict = [
     Download: "Download",
     PleaseSelectAFileKind: "Please select a file kind",
     FileKind: "File kind",
+    Submit: "Submit",
+    Username: "Username",
+    Password: "Password",
+    Overview: "Overview",
   },
   {
     Dashboard: "仪表盘",
@@ -43,7 +47,7 @@ const dict = [
     Settings: "设置",
     History: "历史",
     Login: "登录",
-    ManagementSystem: "管理系统",
+    ManagementSystem: "平台管理系统",
     Language: "语言",
     SetYourPreferredLanguage: "设置您的首选语言",
     ManageYourTransactionAndViewTheirDetails: "管理您的交易并查看其详细信息",
@@ -69,6 +73,10 @@ const dict = [
     Download: "下载",
     PleaseSelectAFileKind: "请选择文件类型",
     FileKind: "文件类型",
+    Submit: "提交",
+    Username: "用户名",
+    Password: "密码",
+    Overview: "概览",
   },
 ];
 

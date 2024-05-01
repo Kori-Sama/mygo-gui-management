@@ -149,7 +149,9 @@ const Header = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuSeparator />
-          <DropdownMenuItem>{lang.Settings}</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to="/settings">{lang.Settings}</Link>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="bg-destructive">
             {lang.Logout}

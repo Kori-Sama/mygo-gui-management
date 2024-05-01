@@ -15,6 +15,7 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { env } from "@/lib/constants";
+import { useLangStore } from "@/store";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -54,6 +55,9 @@ const LoginForm = () => {
       message: data.msg,
     });
   };
+
+  const lang = useLangStore((s) => s.map);
+
   return (
     <Form {...form}>
       <form
@@ -67,7 +71,7 @@ const LoginForm = () => {
             <FormItem>
               <FieldWrapper icon="username">
                 <FormControl>
-                  <Input placeholder="Username" {...field} />
+                  <Input placeholder={lang.Username} {...field} />
                 </FormControl>
               </FieldWrapper>
               <FormMessageOccupation />
@@ -81,7 +85,11 @@ const LoginForm = () => {
             <FormItem>
               <FieldWrapper icon="password">
                 <FormControl>
-                  <Input type="password" placeholder="Password" {...field} />
+                  <Input
+                    type="password"
+                    placeholder={lang.Password}
+                    {...field}
+                  />
                 </FormControl>
               </FieldWrapper>
               <FormMessageOccupation />
@@ -89,7 +97,7 @@ const LoginForm = () => {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{lang.Submit}</Button>
       </form>
     </Form>
   );
