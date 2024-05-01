@@ -80,8 +80,10 @@ const dict = [
   },
 ];
 
+type Lang = "en" | "zh";
+
 interface LangState {
-  lang: "en" | "zh";
+  lang: Lang;
   map: (typeof dict)[0];
   setLang: (lang: "en" | "zh") => void;
   load: () => void;
@@ -90,7 +92,7 @@ interface LangState {
 const useLangStore = create<LangState>((set) => ({
   lang: "en",
   map: dict[1],
-  setLang: (lang: "en" | "zh") => {
+  setLang: (lang: Lang) => {
     set({ lang });
     if (lang === "en") {
       set({ map: dict[0] });
@@ -100,7 +102,7 @@ const useLangStore = create<LangState>((set) => ({
     localStorage.setItem("lang", lang);
   },
   load: () => {
-    const lang = localStorage.getItem("lang") as "en" | "zh";
+    const lang = localStorage.getItem("lang") as Lang;
     if (lang) {
       set({ lang });
       if (lang === "en") {

@@ -55,7 +55,7 @@ export const columns: ColumnDef<Transaction>[] = [
               {lang.Reject}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => column.setFilterValue("draft")}>
-              {lang.Reject}
+              {lang.Draft}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
