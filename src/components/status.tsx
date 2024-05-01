@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Badge } from "./ui/badge";
+import { useLangStore } from "@/store";
 
 const Status = ({
   className,
@@ -8,6 +9,7 @@ const Status = ({
   className?: string;
   children: string;
 }) => {
+  const lang = useLangStore((s) => s.lang);
   return (
     <Badge
       className={cn(
@@ -22,7 +24,15 @@ const Status = ({
         className
       )}
     >
-      {children.charAt(0).toUpperCase() + children.slice(1)}
+      {lang == "en"
+        ? children.charAt(0).toUpperCase() + children.slice(1)
+        : children === "passed"
+        ? "通过"
+        : children === "reject"
+        ? "退回"
+        : children === "censor"
+        ? "审核"
+        : "草案"}
     </Badge>
   );
 };

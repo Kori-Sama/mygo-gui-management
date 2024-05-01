@@ -1,12 +1,17 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
+import { useLangStore } from "@/store";
 import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const Layout = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  useEffect(() => {}, []);
+  const loadLang = useLangStore((s) => s.load);
+  useEffect(() => {
+    loadLang();
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -15,7 +20,7 @@ const Layout = () => {
     if (pathname == "/") {
       navigate("/dashboard");
     }
-  }, [navigate, pathname]);
+  }, [pathname]);
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <Sidebar />

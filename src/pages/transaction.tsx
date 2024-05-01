@@ -1,7 +1,7 @@
 import { columns } from "@/components/transaction/columns";
 import { DataTable } from "@/components/transaction/data-table";
 import { useEffect, useState } from "react";
-import { useTransactionStore } from "@/store";
+import { useLangStore, useTransactionStore } from "@/store";
 import {
   Card,
   CardContent,
@@ -45,20 +45,22 @@ const TransactionPage = () => {
     setPageSize(pageSize);
   };
 
+  const lang = useLangStore((s) => s.map);
+
   return (
     <Dialog>
       <Card x-chunk="dashboard-06-chunk-0" className="lg:mx-64 mt-4">
         <CardHeader>
           <CardTitle>
             <div className="flex justify-between">
-              <p>Transaction</p>
+              <p>{lang.Transaction}</p>
               <DialogTrigger asChild>
-                <Button>Export</Button>
+                <Button>{lang.Export}</Button>
               </DialogTrigger>
             </div>
           </CardTitle>
           <CardDescription>
-            Manage your Transaction and view their details.
+            {lang.ManageYourTransactionAndViewTheirDetails}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -83,7 +85,7 @@ const TransactionPage = () => {
       </Card>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Export to local file</DialogTitle>
+          <DialogTitle>{lang.ExportToLocalFile}</DialogTitle>
         </DialogHeader>
         <div>
           <Select
@@ -92,7 +94,7 @@ const TransactionPage = () => {
             }}
           >
             <SelectTrigger>
-              <SelectValue placeholder="File kind" />
+              <SelectValue placeholder={lang.FileKind} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="csv">CSV</SelectItem>
@@ -101,7 +103,7 @@ const TransactionPage = () => {
             </SelectContent>
           </Select>
           {fileKind === "" && onDownload ? (
-            <p className="text-destructive">Please select a file kind</p>
+            <p className="text-destructive">{lang.PleaseSelectAFileKind}</p>
           ) : null}
         </div>
         <DialogFooter>
@@ -111,7 +113,7 @@ const TransactionPage = () => {
               console.log(fileKind);
             }}
           >
-            Download
+            {lang.Download}
           </Button>
         </DialogFooter>
       </DialogContent>

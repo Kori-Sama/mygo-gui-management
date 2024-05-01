@@ -23,17 +23,19 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Fragment } from "react/jsx-runtime";
 import avatar from "@/assets/Alice.jpg";
+import { useLangStore } from "@/store";
 
 const Header = () => {
   const { pathname } = useLocation();
 
   const pathnames = pathname.split("/").filter((x) => x);
+
+  const lang = useLangStore((s) => s.map);
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -58,28 +60,28 @@ const Header = () => {
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <Home className="h-5 w-5" />
-              Dashboard
+              {lang.Dashboard}
             </Link>
             <Link
               to="/transaction"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <ArrowLeftRight className="h-5 w-5" />
-              Transaction
+              {lang.Transaction}
             </Link>
             <Link
               to="/user"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <Users2 className="h-5 w-5" />
-              User
+              {lang.User}
             </Link>
             <Link
               to="/settings"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <LineChart className="h-5 w-5" />
-              Settings
+              {lang.Settings}
             </Link>
           </nav>
         </SheetContent>
@@ -146,12 +148,12 @@ const Header = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
+          <DropdownMenuItem>{lang.Settings}</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="bg-destructive">Logout</DropdownMenuItem>
+          <DropdownMenuItem className="bg-destructive">
+            {lang.Logout}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

@@ -22,38 +22,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useTransactionStore } from "@/store";
+import { useLangStore, useTransactionStore } from "@/store";
 import { useState } from "react";
 
+/* eslint-disable */
 export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "status",
     header: ({ column }) => {
+      const lang = useLangStore((s) => s.map);
       return (
         <DropdownMenu>
           <DropdownMenuTrigger>
             <div className="flex">
-              <p>Status</p>
+              <p>{lang.Status}</p>
               <ChevronDown />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Filter</DropdownMenuLabel>
+            <DropdownMenuLabel>{lang.Filter}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => column.setFilterValue("")}>
-              All
+              {lang.All}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => column.setFilterValue("passed")}>
-              Passed
+              {lang.Passed}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => column.setFilterValue("censor")}>
-              Censor
+              {lang.Censor}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => column.setFilterValue("reject")}>
-              Reject
+              {lang.Reject}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => column.setFilterValue("draft")}>
-              Draft
+              {lang.Reject}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -67,11 +69,17 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "title",
-    header: "Title",
+    header: () => {
+      const lang = useLangStore((s) => s.map);
+      return <p>{lang.Title}</p>;
+    },
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: () => {
+      const lang = useLangStore((s) => s.map);
+      return <p>{lang.Description}</p>;
+    },
     cell: ({ row }) => {
       const description = row.getValue("description") as string;
       if (description.length > 50) {
@@ -82,18 +90,22 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "value",
-    header: "Value",
+    header: () => {
+      const lang = useLangStore((s) => s.map);
+      return <p>{lang.Value}</p>;
+    },
   },
   {
     accessorKey: "date",
     header: ({ column }) => {
+      const lang = useLangStore((s) => s.map);
       return (
         <div className="flex">
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Date
+            {lang.Date}
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
@@ -104,10 +116,10 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "action",
     header: () => <span className="sr-only">Action</span>,
     cell: ({ row }) => {
-      /* eslint-disable */
       const [tx, setTx] = useState(row.original);
       const handleTx = useTransactionStore((s) => s.handleTransaction);
       const setStoreTx = useTransactionStore((s) => s.setTransaction);
+      const lang = useLangStore((s) => s.map);
       /* eslint-enable */
 
       const handle = (action: "reject" | "pass") => {
@@ -129,11 +141,15 @@ export const columns: ColumnDef<Transaction>[] = [
               <DialogTitle>
                 <div className="flex flex-col justify-between m-2 gap-2">
                   <div>{tx.title}</div>
-                  <p className="text-sm text-accent">{tx.date}</p>
+                  <p className="text-sm text-muted-foreground">{tx.date}</p>
                 </div>
               </DialogTitle>
               <DialogDescription>
-                <Textarea readOnly value={tx.description} />
+                <Textarea
+                  readOnly
+                  value={tx.description}
+                  className="h-[200px]"
+                />
               </DialogDescription>
               <DialogFooter>
                 <div className="flex items-center w-full justify-between mt-2">
@@ -144,13 +160,13 @@ export const columns: ColumnDef<Transaction>[] = [
                         variant="destructive"
                         onClick={() => handle("reject")}
                       >
-                        Reject
+                        {lang.Reject}
                       </Button>
                       <Button
                         variant="secondary"
                         onClick={() => handle("pass")}
                       >
-                        Pass
+                        {lang.Passed}
                       </Button>
                     </div>
                   </DialogClose>

@@ -28,6 +28,7 @@ import {
   PaginationEllipsis,
   PaginationNext,
 } from "../ui/pagination";
+import { useLangStore } from "@/store";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -67,6 +68,8 @@ export function DataTable<TData, TValue>({
   useEffect(() => {
     paginationCallback(pageIndex, pageSize);
   }, [pageIndex, pageSize]);
+
+  const lang = useLangStore((s) => s.map);
 
   return (
     <div>
@@ -117,7 +120,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {lang.NoResult}
                 </TableCell>
               </TableRow>
             )}
@@ -136,7 +139,9 @@ export function DataTable<TData, TValue>({
                   }
                 }}
                 isActive={table.getCanPreviousPage()}
-              />
+              >
+                {lang.Previous}
+              </PaginationPrevious>
             </PaginationItem>
             {Array.from({ length: table.getPageCount() }, (_, index) => (
               <PaginationItem key={index}>
@@ -161,7 +166,9 @@ export function DataTable<TData, TValue>({
                   }
                 }}
                 isActive={table.getCanNextPage()}
-              />
+              >
+                {lang.Next}
+              </PaginationNext>
             </PaginationItem>
           </PaginationContent>
         </Pagination>

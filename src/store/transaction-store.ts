@@ -74,7 +74,7 @@ const convertTx = (val: Transaction) => {
   } else if (s == "PASSED") {
     val.status = "passed";
   }
-  val.date = new Date(Number(val.date) * 1000).toLocaleTimeString();
+  val.date = new Date(Number(val.date) * 1000).toLocaleDateString();
   return val;
 };
 
