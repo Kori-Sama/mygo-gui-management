@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -34,8 +34,7 @@ const TransactionPage = () => {
   }, []);
   const data = useTransactionStore((state) => state.transactions);
 
-  const [fileKind, setFileKind] = useState<"csv" | "json" | "excel" | "">("");
-  const [onDownload, setOnDownload] = useState(false);
+  const [fileKind, setFileKind] = useState<"csv" | "json" | "excel">("excel");
 
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(8);
@@ -46,6 +45,37 @@ const TransactionPage = () => {
   };
 
   const lang = useLangStore((s) => s.map);
+
+  const [downloadLink, setDownloadLink] = useState("");
+
+  useEffect(() => {
+    if (fileKind === "excel" || fileKind === "csv") {
+      const cols = columns as { accessorKey: string }[];
+
+      let csvStr =
+        cols
+          .filter((col) => col.accessorKey !== "action")
+          .map((col) => col.accessorKey)
+          .join(",") + "\r\n";
+      csvStr += data.map((row) => Object.values(row).join(",")).join("\r\n");
+
+      if (fileKind == "excel") {
+        setDownloadLink(
+          "data:application/vnd.ms-excel;charset=utf-8,\uFEFF" +
+            encodeURIComponent(csvStr)
+        );
+      } else {
+        setDownloadLink(
+          "data:text/csv;charset=utf-8,\uFEFF" + encodeURIComponent(csvStr)
+        );
+      }
+    } else if (fileKind === "json") {
+      setDownloadLink(
+        "data:application/json;charset=utf-8,\uFEFF" +
+          encodeURIComponent(JSON.stringify(data))
+      );
+    }
+  }, [fileKind]);
 
   return (
     <Dialog>
@@ -90,11 +120,15 @@ const TransactionPage = () => {
         <div>
           <Select
             onValueChange={(kind) => {
-              setFileKind(kind as "csv" | "json" | "excel" | "");
+              setFileKind(kind as "csv" | "json" | "excel");
             }}
           >
             <SelectTrigger>
-              <SelectValue placeholder={lang.FileKind} />
+              <SelectValue
+                placeholder={
+                  fileKind.charAt(0).toUpperCase() + fileKind.slice(1)
+                }
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="csv">CSV</SelectItem>
@@ -102,19 +136,11 @@ const TransactionPage = () => {
               <SelectItem value="excel">Excel</SelectItem>
             </SelectContent>
           </Select>
-          {fileKind === "" && onDownload ? (
-            <p className="text-destructive">{lang.PleaseSelectAFileKind}</p>
-          ) : null}
         </div>
         <DialogFooter>
-          <Button
-            onClick={() => {
-              setOnDownload(true);
-              console.log(fileKind);
-            }}
-          >
+          <a href={downloadLink} className={buttonVariants()} download>
             {lang.Download}
-          </Button>
+          </a>
         </DialogFooter>
       </DialogContent>
     </Dialog>
