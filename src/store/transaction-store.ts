@@ -1,4 +1,5 @@
 import { env } from "@/lib/constants";
+import { getToken } from "@/lib/token";
 import { Transaction } from "@/lib/types";
 import { create } from "zustand";
 
@@ -18,6 +19,9 @@ const useTransactionStore = create<TransactionState>()((set) => ({
   fetchTransactions: async () => {
     const res = await fetch(env.admin_url + "/transactions", {
       method: "GET",
+      headers: {
+        Authorization: getToken(),
+      },
     });
     const data = (await res.json()).map(convertTx);
     set({
@@ -40,6 +44,9 @@ const useTransactionStore = create<TransactionState>()((set) => ({
     const query = `${env.admin_url}/transaction?id=${id}&action=${action}`;
     const res = await fetch(query, {
       method: "POST",
+      headers: {
+        Authorization: getToken(),
+      },
     });
     const tx = convertTx(await res.json());
     set((state) => {

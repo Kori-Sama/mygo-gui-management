@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { env } from "@/lib/constants";
 import { useLangStore } from "@/store";
+import { setToken } from "@/lib/token";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -45,8 +46,8 @@ const LoginForm = () => {
     });
     const data = await res.json();
     if (data.code === 200) {
-      const token = res.headers.get("Authorization");
-      localStorage.setItem("token", token!);
+      const token = res.headers.get("Authorization") ?? "No Token";
+      setToken(token);
       navigate("/");
       return;
     }
